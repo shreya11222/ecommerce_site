@@ -1,0 +1,67 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="home-intro reveal">
+  <h1>Welcome to My Shop!!!!</h1>
+  <p>
+    At SparklyTech, we bring you the latest in electronic accessories
+    that combine style, quality, and innovation.
+    From sleek chargers and headphones to smart gadgets and phone cases,
+    our products keep you connected and powered up.
+    Discover accessories designed to make your tech life effortless,
+    stylish, and sparkling!
+  </p>
+  <img src="{% static 'shop/images/logo.png' %}" alt="Logo" class="home-logo" />
+</div>
+
+<section class="featured-products reveal">
+  <h2>Featured Products</h2>
+  <div class="product-grid">
+    {% for product in featured_products %}
+      <div class="product-card">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% else %}
+          <img src="{% static 'shop/images/default-product.png' %}" alt="{{ product.name }}">
+        {% endif %}
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description|truncatewords:18 }}</p>
+        <strong>&#8377;{{ product.price }}</strong>
+        <div class="actions">
+          <a href="{% url 'product_detail' product.pk %}" class="btn">View Details</a>
+          <a href="{% url 'add_to_cart' product.pk %}" class="btn add">Add to Cart</a>
+        </div>
+      </div>
+    {% empty %}
+      <p>No featured products at the moment.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
+{% block footer %}
+<footer class="site-footer reveal">
+  <div class="footer-content">
+    <div class="footer-section about">
+      <h3>About My Shop</h3>
+      <p>Your go-to destination for quality electronic accessories and gadgets. We prioritize style, performance, and customer satisfaction.</p>
+    </div>
+    <div class="footer-section contact">
+      <h3>Contact Us</h3>
+      <p>Email: support@myshop.com</p>
+      <p>Phone: +91 1234 567 890</p>
+      <p>Address: 123 Tech Street, Silicon Valley</p>
+    </div>
+    <div class="footer-section social">
+      <h3>Follow Us</h3>
+      <a href="#" class="social-link">Facebook</a> |
+      <a href="#" class="social-link">Twitter</a> |
+      <a href="#" class="social-link">Instagram</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2025 My Shop. All rights reserved.
+  </div>
+</footer>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<h1>Your Cart</h1>
+{% if items %}
+    <ul>
+    {% for item in items %}
+        <li>{{ item.product.name }} - Quantity: {{ item.quantity }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Your cart is empty.</p>
+{% endif %}
+<a href="{% url 'product_list' %}">Continue Shopping</a>
+{% endblock %}

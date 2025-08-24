@@ -1,0 +1,41 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="contact-section reveal">
+  <h1>Contact Us</h1>
+  <p class="intro">
+    Have questions or need assistance? We're here to help! Reach out to our customer support team via the form below,
+    or use the contact information provided. Your satisfaction is our priority.
+  </p>
+
+  <div class="contact-wrapper">
+    <form method="post" action="{% url 'contact' %}" class="contact-form">
+      {% csrf_token %}
+      <label for="id_name">Name:</label>
+      <input id="id_name" type="text" name="name" required>
+
+      <label for="id_email">Email:</label>
+      <input id="id_email" type="email" name="email" required>
+
+      <label for="id_message">Message:</label>
+      <textarea id="id_message" name="message" rows="5" required></textarea>
+
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+
+    <div class="contact-info">
+      <h2>Our Contact Info</h2>
+      <p><strong>Email:</strong> gshreya2580@gmail.com</p>
+      <p><strong>Phone:</strong> +91 6392989965</p>
+      <p><strong>Address:</strong> lucknow</p>
+      <h3>Follow Us</h3>
+      <p>
+        <a href="#" class="social-link">Facebook</a> |
+        <a href="#" class="social-link">Twitter</a> |
+        <a href="#" class="social-link">Instagram</a>
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

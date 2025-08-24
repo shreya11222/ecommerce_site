@@ -1,0 +1,26 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Products</h1>
+<div class="product-grid">
+  {% if products %}
+    {% for product in products %}
+      <div class="product-card">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% else %}
+          <img src="{% static 'shop/images/default-product.png' %}" alt="{{ product.name }}">
+        {% endif %}
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description|truncatewords:15 }}</p>
+        <p class="price">&#8377;{{ product.price }}</p>
+        <a class="btn" href="{% url 'product_detail' product.pk %}">View Details</a>
+        <a class="btn add" href="{% url 'add_to_cart' product.pk %}">Add to Cart</a>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No products available.</p>
+  {% endif %}
+</div>
+{% endblock %}

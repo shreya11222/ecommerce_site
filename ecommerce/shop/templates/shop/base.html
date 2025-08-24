@@ -1,0 +1,349 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Shop{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'shop/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
+
+    <style>
+body {
+    background: #f7f9fb;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+}
+
+header {
+    background: #0073e6;
+    color: #fff;
+    padding: 24px 0 10px 0;
+    text-align: left;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+header h1 {
+    margin: 0 0 10px 30px;
+    font-size: 2.2rem;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 30px;
+}
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 9px 22px;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background 0.18s;
+    margin-right: 10px;
+}
+nav a:hover, nav a.active {
+    background: #005bb5;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 15px;
+    padding: 30px 36px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+    min-height: 70vh;
+}
+
+footer {
+    background: #f1f1f1;
+    text-align: center;
+    color: #666;
+    font-size: 15px;
+    padding: 22px 0;
+    border-top: 1px solid #e2e2e2;
+    margin-top: 48px;
+}
+
+/* Product card styles */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+    gap: 30px;
+    margin-top: 28px;
+}
+.product-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 24px rgba(0,115,230,0.06);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: box-shadow 0.18s, transform 0.16s;
+    border: 1px solid #eaeaea;
+}
+.product-card:hover {
+    transform: translateY(-8px) scale(1.025);
+    box-shadow: 0 10px 36px rgba(0,115,230,0.13);
+}
+
+.product-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #f3f3fb;
+}
+
+.product-card h3 {
+    margin: 16px 0 3px;
+    color: #1976d2;
+}
+.product-card p {
+    color: #757575;
+    font-size: 15px;
+    margin: 0 0 8px 0;
+}
+.product-card strong {
+    color: #29b6f6;
+    font-size: 1.11rem;
+}
+.product-card .actions {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.product-card .btn {
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.16s;
+    cursor: pointer;
+    text-decoration: none;
+}
+.product-card .btn.add {
+    background: #43a047;
+}
+.product-card .btn:hover {
+    background: #005bb5;
+}
+.product-card .btn.add:hover {
+    background: #357a38;
+}
+
+/* Form (signup/login) styles */
+form {
+    background: #fbfbfb;
+    padding: 22px 25px 18px 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(16,120,220,0.04);
+    max-width: 420px;
+    margin: 30px auto 0 auto;
+    border: 1px solid #e0e0e0;
+}
+form input[type=text], form input[type=email], form input[type=password], form textarea {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin: 6px 0 13px 0;
+    background: #fafbfc;
+    transition: border 0.13s;
+}
+form input:focus {
+    outline: none;
+    border: 1.5px solid #3498db;
+}
+form button, form input[type=submit] {
+    font-size: 1.09rem;
+    background: #0073e6;
+    color: #fff;
+    font-weight: bold;
+    padding: 9px 32px;
+    border: none;
+    border-radius: 6px;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: background 0.18s;
+}
+form button:hover, form input[type=submit]:hover {
+    background: #005bb5;
+}
+
+/* Center large intro home text */
+.home-intro {
+    text-align: center;
+    margin: 42px auto 0 auto;
+    font-size: 2.09rem;
+    font-weight: 600;
+    color: #222;
+    line-height: 1.4;
+    max-width: 900px;
+}
+.signup-container {
+  max-width: 400px;
+  margin: 60px auto 80px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  padding: 36px 28px;
+  border-radius: 14px;
+  box-shadow: 0 10px 32px rgba(118, 75, 162, 0.45);
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.signup-container h2 {
+  font-size: 2.4rem;
+  margin-bottom: 24px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #e4d1ff;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  padding: 12px 14px;
+  font-size: 1rem;
+  color: #333;
+  box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.75);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+  outline: none;
+  box-shadow: inset 0 0 14px rgba(255, 255, 255, 1);
+  border: 1px solid #b7a1ff;
+}
+
+.btn-signup {
+  padding: 14px;
+  background-color: #a084ca;
+  border: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(166, 130, 234, 0.6);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 18px;
+}
+
+.btn-signup:hover {
+  background-color: #8c62c7;
+  box-shadow: 0 10px 24px rgba(140, 98, 199, 0.9);
+}
+
+.login-link {
+  margin-top: 20px;
+  font-size: 0.95rem;
+  color: #daccff;
+}
+
+.login-link a {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.login-link a:hover {
+  color: #b4a1ff;
+}
+
+</style>
+
+</head>
+<body>
+    <header>
+        <h1>Shop Header</h1>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'product_list' %}">Products</a>
+            <a href="{% url 'cart' %}">Cart</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'signup' %}">Sign Up</a>
+            
+
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% if user.is_authenticated and user.is_staff %}
+         <a href="{% url 'admin_product_add' %}">Add Product</a>
+         <a href="{% url 'admin_order_list' %}">View Orders</a>
+         <a href="/admin/">Admin Dashboard</a>
+        {% endif %}
+
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 My Shop</p>
+    </footer>
+    <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const reveals = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+           entry.target.classList.add('active');
+           observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    reveals.forEach(el => observer.observe(el));
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  });
+</script>
+
+</body>
+</html>

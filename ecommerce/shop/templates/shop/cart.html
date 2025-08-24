@@ -1,0 +1,96 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Your Shopping Cart</h1>
+
+{% if cart_items %}
+<table class="cart-table">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in cart_items %}
+    <tr>
+      <td class="product-info">
+        {% if item.product.image %}
+          <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="cart-product-image" />
+        {% else %}
+          <img src="{% static 'shop/images/default-product.png' %}" alt="{{ item.product.name }}" class="cart-product-image" />
+        {% endif %}
+        <div class="product-name">{{ item.product.name }}</div>
+      </td>
+      <td>&#8377;{{ item.product.price }}</td>
+      <td>
+        <form method="post" action="{% url 'update_cart' item.product.pk %}" class="quantity-form">
+          {% csrf_token %}
+          <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="quantity-input" />
+          <button type="submit" class="btn btn-update">Update</button>
+        </form>
+      </td>
+      <td>&#8377;{{ item.subtotal }}</td>
+      <td>
+        <form method="post" action="{% url 'remove_from_cart' item.product.pk %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-remove">X</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<form method="post" class="discount-form">
+  {% csrf_token %}
+  <label for="discount-code">Discount Code:</label>
+  <input type="text" id="discount-code" name="discount_code" placeholder="Enter code" value="{% if discount_code %}{{ discount_code.code }}{% endif %}">
+
+  <button type="submit" class="btn btn-apply">Apply</button>
+</form>
+
+{% if discount_code %}
+<p class="discount-info">Discount "{{ discount_code.code }}" applied: -&#8377;{{ discount_amount|floatformat:2 }}</p>
+<p class="total-info">Total after discount: &#8377;{{ total_after_discount|floatformat:2 }}</p>
+{% endif %}
+
+<div class="cart-summary">
+  <div>
+    <label for="discount-code">Discount Code:</label>
+    <input type="text" id="discount-code" placeholder="Enter code">
+    <button class="btn btn-apply">Apply</button>
+  </div>
+  <div class="total-price">
+    <strong>Total:</strong> &#8377;{{ total }}
+  </div>
+</div>
+
+<a href="{% url 'checkout' %}" class="btn btn-checkout">Proceed to Checkout</a>
+
+<section class="suggested-products">
+  <h2>Customers Also Bought</h2>
+  <div class="product-grid">
+    {% for product in suggested_products %}
+    <div class="product-card">
+      {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+      {% else %}
+        <img src="{% static 'shop/images/default-product.png' %}" alt="{{ product.name }}">
+      {% endif %}
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.description|truncatewords:15 }}</p>
+      <strong>&#8377;{{ product.price }}</strong>
+      <a href="{% url 'add_to_cart' product.pk %}" class="btn add">Add to Cart</a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% else %}
+<p>Your cart is empty. <a href="{% url 'product_list' %}">Continue shopping</a>.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<h2>Checkout</h2>
+
+<form method="post">
+  {% csrf_token %}
+  <label for="address">Delivery Address:</label><br>
+  <textarea id="address" name="address" rows="4" cols="40"></textarea><br><br>
+  
+  {% if error %}
+    <p style="color:red">{{ error }}</p>
+  {% endif %}
+  
+  <button type="submit">Place Order</button>
+</form>
+<form method="get" action="{% url 'product_list' %}">
+  <input type="text" name="search" placeholder="Search products..." value="{{ request.GET.search }}">
+  <button type="submit">Search</button>
+</form>
+
+{% endblock %}

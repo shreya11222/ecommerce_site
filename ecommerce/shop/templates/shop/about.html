@@ -1,0 +1,50 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="about-section reveal">
+  <h1>About SparklyTech</h1>
+  <p>
+    At SparklyTech, we believe technology should not only be functional but also stylish and accessible.
+    Our mission is to provide you with the latest, high-quality electronic accessories that enhance your digital life.
+  </p>
+  
+  <div class="about-content">
+    <div class="about-image">
+      <img src="{% static 'shop/images/about-technology.jpg' %}" alt="Technology" />
+    </div>
+    <div class="about-text">
+      <h2>Who We Are</h2>
+      <p>
+        Founded in 2020, SparklyTech has quickly become a trusted name in electronics.
+        We curate products with a focus on innovation, durability, and aesthetics.
+      </p>
+      <h2>What We Offer</h2>
+      <ul>
+        <li>Cutting-edge chargers and cables</li>
+        <li>Noise-canceling headphones</li>
+        <li>Smart gadgets and smart home accessories</li>
+        <li>Durable phone cases with style</li>
+      </ul>
+      <h2>Our Commitment</h2>
+      <p>
+        Customer satisfaction is our priority.
+        We offer excellent support, fast shipping, and hassle-free returns.
+      </p>
+      <div class="about-section reveal">
+  ...
+  <div class="about-content">
+    <div class="about-image">
+      <img src="{% static 'shop/images/about-technology.jpg' %}" alt="Technology" />
+    </div>
+    <div class="about-text">
+      <h2>Who We Are</h2>
+      ...
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<h1>{{ product.name }}</h1>
+<p>{{ product.description }}</p>
+<p>Price: ₹{{ product.price }}</p>
+<a href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
+<a href="{% url 'product_list' %}">Back to Products</a>
+{% endblock %}
+{% extends 'shop/base.html' %}
+{% block content %}
+<h2>{{ product.name }}</h2>
+<img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:300px;"/>
+<p>{{ product.description }}</p>
+<p><strong>Price:</strong> &#8377;{{ product.price }}</p>
+<p><strong>Available Stock:</strong> {{ product.stock_quantity }}</p>
+
+<h3>Reviews</h3>
+<div>
+  {% for review in reviews %}
+    <div style="border-bottom: 1px solid #ccc; margin-bottom: 8px;">
+      <strong>{{ review.user.username }}</strong> -
+      Rating: {{ review.rating }} / 5<br/>
+      {{ review.comment }}
+    </div>
+  {% empty %}
+    <p>No reviews yet.</p>
+  {% endfor %}
+</div>
+
+{% if user.is_authenticated %}
+<h4>Add a Review</h4>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Submit Review</button>
+</form>
+{% else %}
+<p><a href="{% url 'login' %}">Login</a> to add a review.</p>
+{% endif %}
+{% endblock %}
